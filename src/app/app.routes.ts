@@ -3,6 +3,7 @@ import { SplashScreen } from './components/splash-screen/splash-screen';
 import { Welcome } from './components/welcome/welcome';
 import { SignIn } from './components/sign-in/sign-in';
 import { Register } from './components/register/register';
+import { Dashboard } from './components/dashboard/dashboard';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'splash', pathMatch: 'full' },
@@ -10,5 +11,6 @@ export const routes: Routes = [
     { path: 'welcome', component: Welcome },
     { path: 'signin', component: SignIn },
     { path: 'register', component: Register },
+    { path: 'dashboard', component: Dashboard },
     { path: '**', redirectTo: 'splash' }
 ];

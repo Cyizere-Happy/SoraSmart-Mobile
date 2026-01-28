@@ -7,27 +7,27 @@ import { Router } from '@angular/router';
   imports: [],
   template: `
     <div class="welcome-container">
-      <div class="top-section">
+      <div class="top-section anim-fade-in">
         <div class="logo-container">
-          <div class="app-icon">
+          <div class="app-icon anim-pop-in">
             <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
               <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
               <path d="M9 14l2 2 4-4"></path>
             </svg>
           </div>
-          <h1 class="brand-name">soraSmart</h1>
-          <p class="brand-subtitle">SURVEY DATA COLLECTION</p>
+          <h1 class="brand-name anim-slide-up" style="animation-delay: 0.2s">soraSmart</h1>
+          <p class="brand-subtitle anim-slide-up" style="animation-delay: 0.3s">SURVEY DATA COLLECTION</p>
         </div>
       </div>
       
-      <div class="bottom-section">
-        <h2 class="welcome-title">Welcome</h2>
-        <p class="welcome-desc">
+      <div class="bottom-section anim-slide-up">
+        <h2 class="welcome-title anim-slide-up" style="animation-delay: 0.5s">Welcome</h2>
+        <p class="welcome-desc anim-slide-up" style="animation-delay: 0.6s">
           Local authorities will use a mobile app to collect survey data directly from households, replacing the landlord self-declaration process.
         </p>
         
-        <div class="button-group">
+        <div class="button-group anim-slide-up" style="animation-delay: 0.8s">
           <button class="btn btn-dark" (click)="goToSignIn()">Sign In</button>
           <button class="btn btn-white" (click)="goToRegister()">Sign Up</button>
         </div>
@@ -41,6 +41,7 @@ import { Router } from '@angular/router';
       display: flex;
       flex-direction: column;
       background-color: white;
+      overflow: hidden;
     }
 
     .top-section {
@@ -59,6 +60,7 @@ import { Router } from '@angular/router';
       display: flex;
       flex-direction: column;
       justify-content: center;
+      position: relative;
     }
 
     .logo-container {
@@ -93,14 +95,14 @@ import { Router } from '@angular/router';
       font-size: 28px;
       font-weight: 700;
       color: var(--white);
-      margin-bottom: 10px;
+      margin-bottom: 15px;
     }
 
     .welcome-desc {
       font-size: 14px;
       color: var(--white);
       opacity: 0.9;
-      margin-bottom: 30px;
+      margin-bottom: 35px;
       line-height: 1.6;
     }
 
@@ -111,16 +113,20 @@ import { Router } from '@angular/router';
 
     .btn {
       flex: 1;
-      padding: 15px;
+      padding: 16px;
       border-radius: 30px;
       font-weight: 600;
       font-size: 14px;
-      transition: all 0.2s;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     }
 
     .btn:active {
-      transform: scale(0.98);
-      opacity: 0.9;
+      transform: scale(0.96);
     }
 
     .btn-dark {
@@ -132,6 +138,30 @@ import { Router } from '@angular/router';
       background-color: transparent;
       border: 1px solid var(--white);
       color: var(--white);
+    }
+
+    /* Animations */
+    .anim-fade-in { animation: fadeIn 0.8s ease-out forwards; }
+    .anim-pop-in { animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+    .anim-slide-up { 
+      opacity: 0;
+      transform: translateY(30px);
+      animation: slideUp 0.8s cubic-bezier(0.2, 0.6, 0.2, 1) forwards; 
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.5); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   `,
 })
