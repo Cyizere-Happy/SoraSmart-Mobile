@@ -11,6 +11,13 @@ import { Router } from '@angular/router';
       <div class="header">
         <h1 class="page-title">Dashboard</h1>
         <div class="header-actions">
+          <button class="report-btn" (click)="goToReports()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+              <line x1="12" y1="9" x2="12" y2="13"></line>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+          </button>
           <div class="profile-pic">MJ</div>
         </div>
       </div>
@@ -127,10 +134,10 @@ import { Router } from '@angular/router';
         <div class="list-section anim-slide-up" style="animation-delay: 0.6s">
           <div class="section-header">
             <h2>Registered Properties</h2>
-            <button class="view-all-btn">View All</button>
+            <button class="view-all-btn" (click)="goToMySurveys()">View All</button>
           </div>
 
-          <div class="property-item">
+          <div class="property-item" (click)="goToMySurveys()">
             <div class="property-icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
@@ -145,7 +152,7 @@ import { Router } from '@angular/router';
             <span class="status-badge green">Registered</span>
           </div>
 
-          <div class="property-item">
+          <div class="property-item" (click)="goToMySurveys()">
             <div class="property-icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
@@ -160,7 +167,7 @@ import { Router } from '@angular/router';
             <span class="status-badge green">Registered</span>
           </div>
           
-          <div class="property-item">
+          <div class="property-item" (click)="goToMySurveys()">
             <div class="property-icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
@@ -201,12 +208,15 @@ import { Router } from '@angular/router';
           <span>Map Scan</span>
         </button>
         
-        <button class="nav-item">
+        <button class="nav-item" (click)="goToMySurveys()">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-            <path d="M7 15h0M2 9.5h20"></path>
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
           </svg>
-          <span>Wallets</span>
+          <span>My Surveys</span>
         </button>
         
         <button class="nav-item">
@@ -249,10 +259,10 @@ import { Router } from '@angular/router';
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 15px;
+      gap: 12px;
     }
 
-    .theme-btn {
+    .report-btn {
       width: 40px;
       height: 40px;
       border-radius: 50%;
@@ -261,6 +271,7 @@ import { Router } from '@angular/router';
       display: flex;
       align-items: center;
       justify-content: center;
+      color: #1a1a1a;
     }
 
     .profile-pic {
@@ -303,8 +314,6 @@ import { Router } from '@angular/router';
     .black-card {
       background-color: #000;
       color: white;
-      grid-column: 1; 
-      /* First card usually spans visually in some designs, grid layout here is 2x2 */
     }
 
     .white-card {
@@ -340,7 +349,6 @@ import { Router } from '@angular/router';
     .progress-bar.light { background: #F0F0F0; }
 
     .fill { height: 100%; border-radius: 3px; }
-    .fill.white { background: white; } /* Default for black card */
     .black-card .fill { background: white; }
     .fill.purple { background: #E0E7FF; background-image: linear-gradient(to right, #C7D2FE, #818CF8); }
     .fill.gray { background: #E5E7EB; }
@@ -371,6 +379,14 @@ import { Router } from '@angular/router';
       margin: 0;
     }
 
+    .view-all-btn {
+      font-size: 12px;
+      color: #FFB800;
+      font-weight: 600;
+      background: transparent;
+      border: none;
+    }
+
     .toggle-group {
       background: white;
       padding: 4px;
@@ -386,6 +402,7 @@ import { Router } from '@angular/router';
       font-weight: 600;
       background: transparent;
       color: #999;
+      border: none;
     }
 
     .toggle-btn.active {
@@ -416,7 +433,7 @@ import { Router } from '@angular/router';
       display: flex;
       justify-content: space-around;
       align-items: flex-end;
-      padding-bottom: 20px; /* Space for labels */
+      padding-bottom: 20px;
       position: relative;
     }
 
@@ -455,6 +472,7 @@ import { Router } from '@angular/router';
       border-radius: 16px;
       gap: 12px;
       margin-bottom: 12px;
+      cursor: pointer;
     }
 
     .property-icon {
@@ -509,73 +527,6 @@ import { Router } from '@angular/router';
       color: #FFB800;
     }
 
-    .view-all-btn {
-      font-size: 12px;
-      color: #FFB800;
-      font-weight: 600;
-    }
-
-    /* Bottom Nav */
-    .list-section {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-
-    .list-item {
-      display: flex;
-      align-items: center;
-      padding: 15px;
-      background: white;
-      border-radius: 16px;
-      gap: 15px;
-    }
-
-    .avatar {
-      width: 45px;
-      height: 45px;
-      border-radius: 12px;
-      background: #F5F5F5;
-      color: #333;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 600;
-      font-size: 14px;
-    }
-
-    .item-details {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .item-title {
-      font-weight: 600;
-      font-size: 14px;
-      margin-bottom: 4px;
-    }
-
-    .item-date {
-      font-size: 12px;
-      color: #999;
-    }
-
-    .item-value {
-      font-weight: 700;
-      font-size: 14px;
-      margin-right: 10px;
-    }
-
-    .status-pill {
-      font-size: 10px;
-      background: #F5F5F5;
-      padding: 6px 10px;
-      border-radius: 10px;
-      color: #666;
-      font-weight: 500;
-    }
-
     /* Bottom Nav */
     .bottom-nav {
       position: fixed;
@@ -588,7 +539,7 @@ import { Router } from '@angular/router';
       justify-content: space-between;
       border-top-left-radius: 25px;
       border-top-right-radius: 25px;
-      z-index: 100; /* Ensure it stays on top */
+      z-index: 100;
       box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
     }
 
@@ -600,6 +551,7 @@ import { Router } from '@angular/router';
       color: #666;
       background: transparent;
       border: none;
+      cursor: pointer;
     }
     
     .nav-item.active {
@@ -628,5 +580,13 @@ export class Dashboard {
 
   goToMap() {
     this.router.navigate(['/map-view']);
+  }
+
+  goToReports() {
+    this.router.navigate(['/reports']);
+  }
+
+  goToMySurveys() {
+    this.router.navigate(['/my-surveys']);
   }
 }
