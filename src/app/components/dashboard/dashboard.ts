@@ -1,637 +1,632 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="dashboard-container">
-      <!-- Map Background Layer -->
-      <div class="map-layer">
-        <!-- Placeholder for Map Visualization -->
-        <div class="map-grid">
-          <!-- Horizontal Streets -->
-          <div class="street h-street" style="top: 20%"></div>
-          <div class="street h-street" style="top: 45%"></div>
-          <div class="street h-street" style="top: 70%"></div>
-          
-          <!-- Vertical Streets -->
-          <div class="street v-street" style="left: 30%"></div>
-          <div class="street v-street" style="left: 60%"></div>
-          <div class="street v-street" style="left: 80%"></div>
-          
-          <!-- Diagonal Streets -->
-          <div class="street d-street" style="top: 10%; left: 10%"></div>
-          
-          <!-- Buildings/Blocks (Stylized) -->
-          <div class="block" style="top: 25%; left: 35%"></div>
-          <div class="block" style="top: 50%; left: 10%"></div>
-          <div class="block" style="top: 50%; left: 65%"></div>
-          
-          <!-- Interactive Pins -->
-          <button class="map-pin registered" style="top: 43%; left: 58%" (click)="openRegistration()">
-            <div class="pin-pulse"></div>
-            <div class="pin-inner"></div>
-          </button>
-          
-          <button class="map-pin unregistered" style="top: 28%; left: 32%">
-            <div class="pin-inner"></div>
-          </button>
-          
-          <button class="map-pin current-location" style="top: 65%; left: 45%">
-            <div class="pulse-ring"></div>
-            <div class="location-dot"></div>
-          </button>
+    <div class="analytics-container">
+      <div class="header">
+        <h1 class="page-title">Dashboard</h1>
+        <div class="header-actions">
+          <div class="profile-pic">MJ</div>
         </div>
       </div>
 
-      <!-- Header Overlay -->
-      <div class="map-header anim-slide-down">
-        <button class="menu-btn">
+      <div class="scroll-content">
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+          <!-- Total Houses (Black Card) -->
+          <div class="stat-card black-card anim-slide-up" style="animation-delay: 0.1s">
+            <div class="stat-value">120</div>
+            <div class="stat-label">Total Houses</div>
+            <div class="progress-container">
+              <div class="progress-bar dark">
+                <div class="fill" style="width: 45%"></div>
+              </div>
+              <div class="progress-text">
+                <span>0%</span>
+                <span>45%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Total Surveys (White Card) -->
+          <div class="stat-card white-card anim-slide-up" style="animation-delay: 0.2s">
+            <div class="stat-value">180</div>
+            <div class="stat-label">Surveys Done</div>
+            <div class="progress-container">
+              <div class="progress-bar light">
+                <div class="fill purple" style="width: 62%"></div>
+              </div>
+              <div class="progress-text">
+                <span>0%</span>
+                <span>62%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Total Clients (White Card) -->
+          <div class="stat-card white-card anim-slide-up" style="animation-delay: 0.3s">
+            <div class="stat-value">240</div>
+            <div class="stat-label">Active Agents</div>
+            <div class="progress-container">
+              <div class="progress-bar light">
+                <div class="fill gray" style="width: 80%"></div>
+              </div>
+              <div class="progress-text">
+                <span>0%</span>
+                <span>80%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pending Tax (White Card) -->
+          <div class="stat-card white-card anim-slide-up" style="animation-delay: 0.4s">
+            <div class="stat-value">140</div>
+            <div class="stat-label">Pending Tax</div>
+            <div class="progress-container">
+              <div class="progress-bar light">
+                <div class="fill red" style="width: 85%"></div>
+              </div>
+              <div class="progress-text">
+                <span>0%</span>
+                <span>85%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Revenue/Activity Chart Section -->
+        <div class="chart-section anim-slide-up" style="animation-delay: 0.5s">
+          <div class="section-header">
+            <h2>Activity</h2>
+            <div class="toggle-group">
+              <button class="toggle-btn">Monthly</button>
+              <button class="toggle-btn active">Weekly</button>
+              <button class="toggle-btn">Today</button>
+            </div>
+          </div>
+          
+          <!-- Mock Chart Visualization -->
+          <div class="chart-container">
+            <div class="y-axis">
+              <span>20k</span>
+              <span>15k</span>
+              <span>10k</span>
+              <span>0</span>
+            </div>
+            <div class="chart-bars">
+              <div class="bar-group">
+                <div class="bar black" style="height: 30%"></div>
+                <div class="bar purple" style="height: 50%"></div>
+                <span class="x-label">Jun 24</span>
+              </div>
+              <div class="bar-group">
+                <div class="bar black" style="height: 40%"></div>
+                <div class="bar purple" style="height: 60%"></div>
+                <span class="x-label">Jun 25</span>
+              </div>
+              <div class="bar-group">
+                <div class="bar black" style="height: 55%"></div>
+                <div class="bar purple" style="height: 45%"></div>
+                <span class="x-label">Jun 26</span>
+              </div>
+              <div class="bar-group">
+                <div class="bar black" style="height: 35%"></div>
+                <div class="bar purple" style="height: 70%"></div>
+                <span class="x-label">Jun 27</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Registered Properties List -->
+        <div class="list-section anim-slide-up" style="animation-delay: 0.6s">
+          <div class="section-header">
+            <h2>Registered Properties</h2>
+            <button class="view-all-btn">View All</button>
+          </div>
+
+          <div class="property-item">
+            <div class="property-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </svg>
+            </div>
+            <div class="property-details">
+              <span class="property-address">KN 45 Ave, Kigali</span>
+              <span class="property-owner">Marie Uwase</span>
+            </div>
+            <div class="property-rent">600,000 RWF</div>
+            <span class="status-badge green">Registered</span>
+          </div>
+
+          <div class="property-item">
+            <div class="property-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </svg>
+            </div>
+            <div class="property-details">
+              <span class="property-address">KN 89 Ave, Kigali</span>
+              <span class="property-owner">Grace Imena</span>
+            </div>
+            <div class="property-rent">800,000 RWF</div>
+            <span class="status-badge green">Registered</span>
+          </div>
+          
+          <div class="property-item">
+            <div class="property-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </svg>
+            </div>
+            <div class="property-details">
+              <span class="property-address">KG 123 St, Kigali</span>
+              <span class="property-owner">Jean Mukasa</span>
+            </div>
+            <div class="property-rent">450,000 RWF</div>
+            <span class="status-badge yellow">Pending</span>
+          </div>
+
+          <!-- Spacer for fixed bottom nav -->
+          <div style="height: 80px"></div>
+        </div>
+      </div>
+
+      <!-- Bottom Navigation -->
+      <div class="bottom-nav">
+        <button class="nav-item active">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="3" y1="12" x2="21" y2="12"></line>
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="18" x2="21" y2="18"></line>
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
           </svg>
+          <span>Dashboard</span>
         </button>
-        <div class="header-title">Survey Map</div>
-        <div class="profile-pic"></div>
-      </div>
-
-      <!-- Logic Flow: Modal -> Registration -> Tax Details -->
-
-      <!-- 1. Location Permission Modal -->
-      <div *ngIf="showLocationModal" class="modal-overlay anim-fade-in">
-        <div class="modal-card anim-scale-up">
-          <div class="modal-icon">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-              <circle cx="12" cy="10" r="3"></circle>
-            </svg>
-          </div>
-          <h3>Allow Your Location</h3>
-          <p>We need your location to verify house coordinates for accurate survey data collection.</p>
-          <button class="btn-primary" (click)="allowLocation()">Ok, sure</button>
-          <button class="btn-text" (click)="skipLocation()">Not Now</button>
-        </div>
-      </div>
-
-      <!-- 2. House Registration Bottom Sheet -->
-      <div *ngIf="showRegistrationSheet" class="bottom-sheet anim-slide-up">
-        <div class="sheet-handle"></div>
-        <div class="sheet-header">
-          <div class="sheet-title-group">
-            <h3>House Registration</h3>
-            <span class="status-badge">Unassessed</span>
-          </div>
-          <button class="close-btn" (click)="closeSheets()">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="18" y1="6" x2="6" y2="18"></line>
-              <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-          </button>
-        </div>
         
-        <div class="sheet-content">
-          <div class="location-info">
-            <div class="info-row">
-              <div class="dot green"></div>
-              <div class="info-text">
-                <span class="label">Coordinates</span>
-                <span class="value">-1.9441° S, 30.0619° E</span>
-              </div>
-            </div>
-            <div class="info-divider"></div>
-            <div class="info-row">
-              <div class="dot orange"></div>
-              <div class="info-text">
-                <span class="label">House Tag</span>
-                <span class="value">Pending Tagging</span>
-              </div>
-              <button class="action-icon-btn">+</button>
-            </div>
-          </div>
-
-          <div class="section-title">Ownership Status</div>
-          <div class="card-options">
-            <div class="option-card selected">
-              <div class="icon-box">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                </svg>
-              </div>
-              <div class="option-details">
-                <span class="opt-title">Residential</span>
-                <span class="opt-sub">Occupied</span>
-              </div>
-            </div>
-            <div class="option-card">
-              <div class="icon-box">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-                </svg>
-              </div>
-              <div class="option-details">
-                <span class="opt-title">Commercial</span>
-                <span class="opt-sub">Business</span>
-              </div>
-            </div>
-          </div>
-
-          <button class="btn-primary full-width" (click)="proceedToTax()">
-            Proceed to Assessment
-          </button>
-        </div>
+        <button class="nav-item" (click)="goToMap()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+            <line x1="8" y1="2" x2="8" y2="18"></line>
+            <line x1="16" y1="6" x2="16" y2="22"></line>
+          </svg>
+          <span>Map Scan</span>
+        </button>
+        
+        <button class="nav-item">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+            <path d="M7 15h0M2 9.5h20"></path>
+          </svg>
+          <span>Wallets</span>
+        </button>
+        
+        <button class="nav-item">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+          <span>Settings</span>
+        </button>
       </div>
-
-      <!-- 3. Tax Details Bottom Sheet -->
-      <div *ngIf="showTaxSheet" class="bottom-sheet anim-slide-up">
-        <div class="sheet-handle"></div>
-        <div class="sheet-header">
-          <button class="back-icon-btn" (click)="backToRegistration()">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="19" y1="12" x2="5" y2="12"></line>
-              <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
-          </button>
-          <h3>Tax Assessment</h3>
-        </div>
-
-        <div class="sheet-content">
-          <div class="form-group">
-            <label>Payment Method</label>
-            <div class="radio-card selected">
-              <div class="radio-label">
-                <div class="icon-circle green">$</div>
-                <span>Cash Payment</span>
-              </div>
-              <div class="radio-indicator"></div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label>More Payment Ways</label>
-            <div class="radio-card">
-              <div class="radio-label">
-                <div class="icon-circle blue">P</div>
-                <span>Mobile Money</span>
-              </div>
-              <div class="radio-circle"></div>
-            </div>
-            <div class="radio-card">
-              <div class="radio-label">
-                <div class="icon-circle dark">B</div>
-                <span>Bank Transfer</span>
-              </div>
-              <div class="radio-circle"></div>
-            </div>
-          </div>
-
-          <button class="btn-dashed">
-            + Add New Method
-          </button>
-
-          <button class="btn-primary full-width mt-auto" (click)="confirmSubmission()">
-            Confirm Assessment
-          </button>
-        </div>
-      </div>
-
     </div>
   `,
   styles: `
-    .dashboard-container {
+    .analytics-container {
       width: 100vw;
       height: 100vh;
-      background-color: #121212; /* Dark map bg */
-      position: relative;
-      overflow: hidden;
-      color: var(--primary);
-    }
-
-    /* Map Visualization */
-    .map-layer {
-      position: absolute;
-      inset: 0;
-      opacity: 0.8;
-    }
-    .map-grid {
-      position: relative;
-      width: 100%;
-      height: 100%;
-    }
-    .street {
-      position: absolute;
-      background-color: #2C2C2C;
-    }
-    .h-street { width: 100%; height: 20px; }
-    .v-street { height: 100%; width: 20px; }
-    .d-street { width: 150%; height: 20px; transform: rotate(45deg); transform-origin: 0 0; }
-    
-    .block {
-      position: absolute;
-      width: 100px;
-      height: 80px;
-      background-color: #1E1E1E;
-      border-radius: 4px;
-    }
-
-    .map-pin {
-      position: absolute;
-      width: 40px;
-      height: 40px;
       display: flex;
-      justify-content: center;
-      align-items: center;
-      transform: translate(-50%, -50%);
+      flex-direction: column;
+      background-color: #F8F9FA;
+      color: #1A1A1A;
     }
 
-    .pin-inner {
-      width: 16px;
-      height: 16px;
-      background-color: #4CAF50;
-      border: 2px solid white;
-      border-radius: 50%;
-      position: relative;
-      z-index: 2;
-    }
-
-    .unregistered .pin-inner {
-      background-color: #FF5252;
-    }
-
-    .pin-pulse {
-      position: absolute;
-      width: 40px;
-      height: 40px;
-      background-color: rgba(76, 175, 80, 0.3);
-      border-radius: 50%;
-      animation: pulse 2s infinite;
-    }
-
-    .current-location .location-dot {
-      width: 12px;
-      height: 12px;
-      background-color: #2196F3;
-      border: 2px solid white;
-      border-radius: 50%;
-      position: relative;
-      z-index: 2;
-    }
-    .current-location .pulse-ring {
-      position: absolute;
-      width: 50px;
-      height: 50px;
-      background-color: rgba(33, 150, 243, 0.2);
-      border-radius: 50%;
-    }
-
-    /* Header */
-    .map-header {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      padding: 50px 20px 20px;
+    .header {
+      padding: 50px 25px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      background: white;
+      position: sticky;
+      top: 0;
       z-index: 10;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
     }
-    .menu-btn {
+
+    .page-title {
+      font-size: 28px;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .theme-btn {
       width: 40px;
       height: 40px;
-      background: white;
       border-radius: 50%;
+      border: 1px solid #EEE;
+      background: white;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
-    .header-title {
-      font-weight: 600;
-      color: white;
-      font-size: 18px;
-    }
+
     .profile-pic {
       width: 40px;
       height: 40px;
-      background-color: #ccc;
       border-radius: 50%;
-      border: 2px solid white;
-    }
-
-    /* Bottom Sheets & Modals */
-    .modal-overlay {
-      position: absolute;
-      inset: 0;
-      background-color: rgba(0,0,0,0.6);
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-      padding-bottom: 40px;
-      z-index: 100;
-      backdrop-filter: blur(2px);
-    }
-
-    .modal-card {
-      background: white;
-      width: 90%;
-      padding: 30px;
-      border-radius: 24px;
-      text-align: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    }
-
-    .modal-icon {
-      width: 40px;
-      height: 40px;
-      margin: 0 auto 15px;
-      color: #4CAF50;
-    }
-
-    .modal-card h3 {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-    .modal-card p {
-      font-size: 14px;
-      color: var(--text-muted);
-      margin-bottom: 25px;
-      line-height: 1.5;
-    }
-
-    .btn-primary {
-      width: 100%;
-      padding: 16px;
-      background-color: #4CAF50;
+      background: #000;
       color: white;
-      border-radius: 30px;
-      font-weight: 600;
-      font-size: 16px;
-      margin-bottom: 10px;
-    }
-    .btn-text {
-      width: 100%;
-      padding: 10px;
-      color: var(--text-muted);
-      font-weight: 500;
-      font-size: 14px;
-    }
-
-    .bottom-sheet {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: white;
-      border-top-left-radius: 30px;
-      border-top-right-radius: 30px;
-      padding: 20px;
-      box-shadow: 0 -5px 30px rgba(0,0,0,0.2);
-      z-index: 50;
-      max-height: 85vh;
-      overflow-y: auto;
-    }
-
-    .sheet-handle {
-      width: 40px;
-      height: 4px;
-      background-color: #E0E0E0;
-      border-radius: 2px;
-      margin: 0 auto 20px;
-    }
-
-    .sheet-header {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      margin-bottom: 25px;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 14px;
     }
 
-    .sheet-title-group h3 {
+    .scroll-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 25px;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .stat-card {
+      padding: 20px;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 140px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    }
+
+    .black-card {
+      background-color: #000;
+      color: white;
+      grid-column: 1; 
+      /* First card usually spans visually in some designs, grid layout here is 2x2 */
+    }
+
+    .white-card {
+      background-color: white;
+      color: #1A1A1A;
+    }
+
+    .stat-value {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .stat-label {
+      font-size: 14px;
+      opacity: 0.7;
+      margin-bottom: 15px;
+    }
+
+    .progress-container {
+      margin-top: auto;
+    }
+
+    .progress-bar {
+      height: 6px;
+      width: 100%;
+      border-radius: 3px;
+      margin-bottom: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    .progress-bar.dark { background: #333; }
+    .progress-bar.light { background: #F0F0F0; }
+
+    .fill { height: 100%; border-radius: 3px; }
+    .fill.white { background: white; } /* Default for black card */
+    .black-card .fill { background: white; }
+    .fill.purple { background: #E0E7FF; background-image: linear-gradient(to right, #C7D2FE, #818CF8); }
+    .fill.gray { background: #E5E7EB; }
+    .fill.red { background: #FECACA; }
+
+    .progress-text {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      opacity: 0.7;
+    }
+
+    /* Chart Section */
+    .chart-section {
+      margin-bottom: 30px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .section-header h2 {
       font-size: 20px;
       font-weight: 700;
+      margin: 0;
+    }
+
+    .toggle-group {
+      background: white;
+      padding: 4px;
+      border-radius: 20px;
+      display: flex;
+      gap: 5px;
+    }
+
+    .toggle-btn {
+      padding: 6px 12px;
+      border-radius: 16px;
+      font-size: 12px;
+      font-weight: 600;
+      background: transparent;
+      color: #999;
+    }
+
+    .toggle-btn.active {
+      background: #000;
+      color: white;
+    }
+
+    .chart-container {
+      background: white;
+      padding: 20px;
+      border-radius: 20px;
+      display: flex;
+      gap: 15px;
+      height: 200px;
+    }
+
+    .y-axis {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      font-size: 10px;
+      color: #999;
+      padding-bottom: 20px;
+    }
+
+    .chart-bars {
+      flex: 1;
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-end;
+      padding-bottom: 20px; /* Space for labels */
+      position: relative;
+    }
+
+    .bar-group {
+      display: flex;
+      gap: 6px;
+      height: 100%;
+      align-items: flex-end;
+      position: relative;
+    }
+
+    .bar {
+      width: 12px;
+      border-radius: 6px;
+    }
+
+    .bar.black { background: #000; }
+    .bar.purple { background: #C7D2FE; }
+
+    .x-label {
+      position: absolute;
+      bottom: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 10px;
+      color: #999;
+      white-space: nowrap;
+    }
+
+    /* Property List */
+    .property-item {
+      display: flex;
+      align-items: center;
+      padding: 16px;
+      background: white;
+      border-radius: 16px;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .property-icon {
+      width: 45px;
+      height: 45px;
+      border-radius: 12px;
+      background: #F5F5F5;
+      color: #FFB800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .property-details {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .property-address {
+      font-weight: 600;
+      font-size: 14px;
       margin-bottom: 4px;
     }
 
-    .status-badge {
+    .property-owner {
       font-size: 12px;
-      background-color: #FFF3E0;
-      color: #FF9800;
-      padding: 4px 8px;
-      border-radius: 12px;
+      color: #999;
+    }
+
+    .property-rent {
+      font-weight: 700;
+      font-size: 13px;
+      margin-right: 10px;
+      color: #333;
+    }
+
+    .status-badge {
+      font-size: 10px;
+      padding: 6px 10px;
+      border-radius: 10px;
       font-weight: 600;
     }
 
-    .back-icon-btn, .close-btn {
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .status-badge.green {
+      background: #E8F5E9;
+      color: #4CAF50;
     }
 
-    .location-info {
-      background-color: #F9F9F9;
-      border-radius: 16px;
-      padding: 15px;
-      margin-bottom: 25px;
+    .status-badge.yellow {
+      background: #FFF9E6;
+      color: #FFB800;
     }
 
-    .info-row {
+    .view-all-btn {
+      font-size: 12px;
+      color: #FFB800;
+      font-weight: 600;
+    }
+
+    /* Bottom Nav */
+    .list-section {
       display: flex;
-      align-items: center;
+      flex-direction: column;
       gap: 15px;
     }
 
-    .info-divider {
-      height: 1px;
-      background-color: #EEE;
-      margin: 15px 0 15px 12px;
-    }
-
-    .dot { width: 8px; height: 8px; border-radius: 50%; }
-    .green { background: #4CAF50; }
-    .orange { background: #FF9800; }
-
-    .info-text {
+    .list-item {
       display: flex;
-      flex-direction: column;
-      flex: 1;
-    }
-
-    .label { font-size: 12px; color: #999; }
-    .value { font-size: 14px; font-weight: 500; }
-
-    .action-icon-btn {
-      width: 30px;
-      height: 30px;
-      background: #4CAF50;
-      color: white;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 18px;
-    }
-
-    .section-title {
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 15px;
-    }
-
-    .card-options {
-      display: flex;
-      gap: 15px;
-      margin-bottom: 25px;
-      overflow-x: auto;
-      padding-bottom: 5px;
-    }
-
-    .option-card {
-      min-width: 140px;
-      border: 1px solid #EEE;
-      border-radius: 16px;
+      align-items: center;
       padding: 15px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+      background: white;
+      border-radius: 16px;
+      gap: 15px;
     }
 
-    .option-card.selected {
-      border-color: #4CAF50;
-      background-color: #F1F8E9;
-    }
-
-    .icon-box {
-      width: 40px;
-      height: 40px;
-      background: #F5F5F5;
+    .avatar {
+      width: 45px;
+      height: 45px;
       border-radius: 12px;
+      background: #F5F5F5;
+      color: #333;
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-
-    .opt-title { font-weight: 600; font-size: 14px; }
-    .opt-sub { font-size: 12px; color: #999; }
-
-    .radio-card {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px;
-      border: 1px solid #EEE;
-      border-radius: 16px;
-      margin-bottom: 15px;
-    }
-    .radio-card.selected {
-      background-color: #F9F9F9;
-      border-color: #EEE;
-    }
-
-    .radio-label {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .icon-circle {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: #EEE;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
+      font-weight: 600;
       font-size: 14px;
     }
-    .icon-circle.green { background: #E8F5E9; color: #4CAF50; }
-    .icon-circle.blue { background: #E3F2FD; color: #2196F3; }
-    .icon-circle.dark { background: #ECEFF1; color: #455A64; }
 
-    .radio-indicator {
-      width: 16px;
-      height: 16px;
-      border: 4px solid #4CAF50;
-      border-radius: 50%;
+    .item-details {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
     }
 
-    .radio-circle {
-      width: 16px;
-      height: 16px;
-      border: 1px solid #CCC;
-      border-radius: 50%;
-    }
-
-    .btn-dashed {
-      width: 100%;
-      padding: 15px;
-      border: 1px dashed #4CAF50;
-      color: #4CAF50;
-      background: #F1F8E9;
-      border-radius: 16px;
+    .item-title {
       font-weight: 600;
-      margin: 10px 0 25px;
+      font-size: 14px;
+      margin-bottom: 4px;
     }
 
-    .full-width { width: 100%; }
-    .mt-auto { margin-top: auto; }
+    .item-date {
+      font-size: 12px;
+      color: #999;
+    }
+
+    .item-value {
+      font-weight: 700;
+      font-size: 14px;
+      margin-right: 10px;
+    }
+
+    .status-pill {
+      font-size: 10px;
+      background: #F5F5F5;
+      padding: 6px 10px;
+      border-radius: 10px;
+      color: #666;
+      font-weight: 500;
+    }
+
+    /* Bottom Nav */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #000;
+      padding: 15px 25px 25px;
+      display: flex;
+      justify-content: space-between;
+      border-top-left-radius: 25px;
+      border-top-right-radius: 25px;
+      z-index: 100; /* Ensure it stays on top */
+      box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      color: #666;
+      background: transparent;
+      border: none;
+    }
+    
+    .nav-item.active {
+      color: white;
+    }
+
+    .nav-item span {
+      font-size: 10px;
+      font-weight: 500;
+    }
 
     /* Animations */
-    .anim-fade-in { animation: fadeIn 0.3s ease-out forwards; }
-    .anim-scale-up { animation: scaleUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
-    .anim-slide-up { animation: slideUp 0.4s cubic-bezier(0.2, 0.6, 0.2, 1) forwards; }
-    .anim-slide-down { animation: slideDown 0.4s ease-out forwards; }
+    .anim-slide-up { 
+      animation: slideUp 0.6s cubic-bezier(0.2, 0.6, 0.2, 1) forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
 
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes scaleUp { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-    @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-    @keyframes slideDown { from { transform: translateY(-100%); } to { transform: translateY(0); } }
-    @keyframes pulse { 0% { transform: scale(1); opacity: 0.5; } 100% { transform: scale(2); opacity: 0; } }
+    @keyframes slideUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
   `
 })
 export class Dashboard {
-  showLocationModal = true;
-  showRegistrationSheet = false;
-  showTaxSheet = false;
+  constructor(private router: Router) { }
 
-  allowLocation() {
-    this.showLocationModal = false;
-  }
-
-  skipLocation() {
-    this.showLocationModal = false;
-  }
-
-  openRegistration() {
-    this.showRegistrationSheet = true;
-  }
-
-  closeSheets() {
-    this.showRegistrationSheet = false;
-    this.showTaxSheet = false;
-  }
-
-  proceedToTax() {
-    this.showRegistrationSheet = false;
-    this.showTaxSheet = true;
-  }
-
-  backToRegistration() {
-    this.showTaxSheet = false;
-    this.showRegistrationSheet = true;
-  }
-
-  confirmSubmission() {
-    this.showTaxSheet = false;
-    // Reset or show success
-    alert('Assessment Submitted Successfully!');
+  goToMap() {
+    this.router.navigate(['/map-view']);
   }
 }
